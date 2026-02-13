@@ -1,21 +1,42 @@
 ---
 name: brighty
-description: Manage Brighty business banking — accounts, cards, payouts, transfers, and team members. Use when the user asks about Brighty balances, payments, card management, salary payouts, invoices, or team member operations.
+description: Manage Brighty business and freelance banking — accounts, cards, payouts, transfers, and team members. Ideal for AI bots and automation. Use when the user asks about Brighty balances, payments, card management, salary payouts, invoices, or team member operations.
+metadata: {"openclaw":{"requires":{"env":["BRIGHTY_API_KEY"]},"primaryEnv":"BRIGHTY_API_KEY","emoji":"🏦"}}
 ---
 
-# Brighty Business Banking
+# Brighty Business & Freelance Banking
 
-MCP server for [Brighty](https://brighty.app) corporate banking API via mcporter.
+MCP server for [Brighty](https://brighty.app) corporate banking API via mcporter. Works for both business and freelance accounts — freelance accounts are particularly well-suited for bots and automation.
 
-## Setup
+## Getting Started
 
-API key required. Get it from [Business Portal](https://business.brighty.app/account/business) → Create API Token (owner only).
+### 1. Sign up
+
+Register at [Brighty Business Portal](https://business.brighty.app/auth?signup=true). Both business and freelance accounts are supported. The owner walks through the onboarding steps.
+
+**What you get by default:**
+- Crypto account
+- EUR / USD / GBP fiat account for self-transfers only (no third-party payments)
+- Mastercard virtual card issuance (linked to crypto or fiat accounts)
+
+**Need to pay third parties (invoices, salaries, etc.)?**
+Contact support to enable a full fiat account with outgoing payments:
+- Telegram: [@DonatasSupportBot](https://t.me/DonatasSupportBot)
+- Email: support@brighty.app
+
+The bank will set it up within a few days.
+
+### 2. Get API key
+
+Go to [Account > Business](https://business.brighty.app/account/business) and click **Create API Token**. Only the business **owner** can do this.
+
+### 3. Configure
 
 **Configure via mcporter env (recommended — key stays in local config, never in plain text files):**
 
 ```bash
 mcporter config remove brighty
-mcporter config add brighty --command "node /path/to/brighty_mcp/dist/index.js" --env BRIGHTY_API_KEY=YOUR_KEY
+mcporter config add brighty --command "npx -y github:Maay/brighty_mcp" --env BRIGHTY_API_KEY=YOUR_KEY
 ```
 
 Check connection: `mcporter call brighty.brighty_status`
@@ -25,6 +46,10 @@ Check connection: `mcporter call brighty.brighty_status`
 - Never use `brighty_setup` tool (writes key as plain text to `~/.brighty/config.json`)
 - If `~/.brighty/config.json` exists, delete it and use env var instead
 - Key lives only in `config/mcporter.json` (local, not pushed to git)
+
+## Authorization Notice
+
+All actions performed through this skill are executed on behalf of the business owner. By using this skill, the owner confirms they authorize these operations.
 
 ## Tool Reference
 
