@@ -11,11 +11,20 @@ MCP server for [Brighty](https://brighty.app) corporate banking API via mcporter
 
 API key required. Get it from [Business Portal](https://business.brighty.app/account/business) → Create API Token (owner only).
 
+**Configure via mcporter env (recommended — key stays in local config, never in plain text files):**
+
 ```bash
-mcporter call brighty.brighty_setup apiKey=YOUR_KEY
+mcporter config remove brighty
+mcporter config add brighty --command "node /path/to/brighty_mcp/dist/index.js" --env BRIGHTY_API_KEY=YOUR_KEY
 ```
 
 Check connection: `mcporter call brighty.brighty_status`
+
+**Security:**
+- Never store API key in SKILL.md, memory files, or chat history
+- Never use `brighty_setup` tool (writes key as plain text to `~/.brighty/config.json`)
+- If `~/.brighty/config.json` exists, delete it and use env var instead
+- Key lives only in `config/mcporter.json` (local, not pushed to git)
 
 ## Tool Reference
 
